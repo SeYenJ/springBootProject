@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.example.mapper.BoardMapper">
+
+	<!-- 게시글 작성 -->
+	<insert id="insertContent" parameterType="com.example.vo.MemberVO">
+		INSERT INTO TB_BOARD (MEMBER_ID,TITLE,CONTENT,MEMBER_PASSWORD,UPLOADFILE,BOARD_REGDATE)
+		VALUES (#{member_id},#{title},#{content},#{member_password},#{uploadfile},now())	
+	</insert>
+	<!-- 페이징 처리 --> 	
+	<!-- 전체 게시글 리스트	 -->
+ 	<select id="listCriteria" resultType="com.example.vo.MemberVO"  parameterType="java.lang.Integer" >
+		SELECT BOARD_NUM, MEMBER_ID, TITLE, BOARD_REGDATE, CONTENT , VIEWS, UPLOADFILE ,(SELECT COUNT(*) AS CUT FROM TB_COMMENT WHERE PARENT_NUM = TB_BOARD.BOARD_NUM AND COMMENT_DELETE = 0) 
+		AS C_NUM FROM TB_BOARD	
+		WHERE BOARD_DELETE = 0
+		<include refid="search"></include>
+		ORDER BY <include refid="temp"></include>  DESC 
+ 		 		LIMIT #{pageStart}, #{perPageNum} 
+ 	</select> 		
+ 	
+	<!-- 전체 게시글 수를 구하는 sql문 -->
+	<select id="totalCount" parameterType="com.example.vo.MemberVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM
+		TB_BOARD
+		WHERE BOARD_DELETE = 0 
+		<include refid="search"></include>
+	</select>
+	
+ 	
+<!-- 검색 게시글 리스트	 -->
+ 	<select id="selectlist" parameterType="com.example.vo.MemberVO" resultType="com.example.vo.MemberVO">
+		SELECT BOARD_NUM, MEMBER_ID, TITLE, BOARD_REGDATE, CONTENT , VIEWS ,UPLOADFILE, 
+		(SELECT COUNT(*) AS CUT FROM `TB_COMMENT` WHERE PARENT_NUM = TB_BOARD.BOARD_NUM) AS C_NUM 
+		FROM TB_BOARD	
+		WHERE <include refid="search"></include> 
+		ORDER BY
+			<include refid="temp"></include>  
+		DESC	
+ 	</select>
+ 	
+<!-- 검색 게시글 페이징	 --> 	
+	<select id="selectTotalCount" parameterType="com.example.vo.MemberVO" resultType="java.lang.Integer">
+		SELECT COUNT(*),(SELECT COUNT(*) AS CUT FROM `TB_COMMENT` WHERE PARENT_NUM = TB_BOARD.BOARD_NUM) AS C_NUM
+		FROM TB_BOARD	
+		WHERE <include refid="search"></include> 
+		AND BOARD_DELETE = 0
+		ORDER BY
+			<include refid="temp"></include>  
+		DESC	
+ 	</select>
+ 	
+	
+ 	<sql id ="search">
+	 	<choose>
+			    <when test="searchType == 't'.toString()">
+			     AND title LIKE CONCAT('%',#{keyword},'%')
+			    </when>
+			    <when test="searchType == 'tc'.toString()">
+			     AND title LIKE CONCAT('%',#{keyword},'%') OR CONTENT LIKE CONCAT('%',#{keyword},'%') 
+			    </when>
+			    <when test="searchType == 'id'.toString()">
+			     AND member_id LIKE CONCAT('%',#{keyword},'%')
+			    </when>
+			    <otherwise>
+			     
+			    </otherwise>
+		  </choose>	
+ 	</sql>
+ 	
+	<sql id ="temp">
+	  <choose>
+		    <when test="temp == 'all'.toString()">
+		      board_regdate
+		    </when>
+		    <when test="temp == 'r'.toString()">
+		      board_regdate
+		    </when>
+		    <when test="temp == 'v'.toString()">
+		      views
+		    </when>
+		    <when test="temp == 'c'.toString()">
+		      c_num
+		    </when>
+		    <otherwise>
+		      board_regdate
+		    </otherwise>
+	  </choose>	
+ 	</sql>
+ 	
+<!-- 게시글 보기 -->
+ 	<select id="selectContent" resultType="com.example.vo.MemberVO">
+		SELECT BOARD_NUM, MEMBER_ID, TITLE, BOARD_REGDATE, CONTENT , VIEWS,UPLOADFILE
+		FROM TB_BOARD	
+		WHERE BOARD_NUM = #{board_num}
+		ORDER BY
+			BOARD_NUM DESC,
+			BOARD_REGDATE DESC	
+ 	</select>
+<!--  글수정 -->	
+ 	<update id="updateContent" parameterType="com.example.vo.MemberVO">
+ 		UPDATE TB_BOARD SET
+ 		TITLE = #{title},
+ 		CONTENT = #{content}
+		WHERE BOARD_NUM = #{board_num}
+		AND MEMBER_PASSWORD = #{member_password}
+ 	</update>
+<!--  게시글 삭제 : 실제로 삭제하진 않고 화면에 안보이기만 삭제하기 위해서 -->
+	<update id="deleteContent">
+		UPDATE TB_BOARD 
+		SET BOARD_DELETE =1
+		WHERE BOARD_NUM = #{board_num}
+	</update>
+<!-- 	조회수 증가 -->
+ 	<update id="updateViews">
+ 		UPDATE TB_BOARD SET
+ 		VIEWS = VIEWS + 1
+		WHERE BOARD_NUM = #{board_num}
+ 	</update>
+<!-- 댓글 저장 -->	
+	<insert id="insertComment" parameterType="com.example.vo.CommentVO">
+		INSERT INTO TB_COMMENT(WRITER,COMMENT,MEMBER_PASSWORD,PARENT_NUM,COMMENT_REGDATE)
+		VALUES (#{writer},#{comment},#{member_password},#{parent_num},now())	
+	</insert>	
+ 	
+<!-- 게시글 해당 댓글 불러오기 -->	
+ 	<select id="selectComment" resultType="com.example.vo.CommentVO">
+ 		SELECT COMMENT_CODE,PARENT_NUM,WRITER,COMMENT,COMMENT_REGDATE
+ 		FROM TB_COMMENT
+ 		WHERE PARENT_NUM = #{BOARD_NUM}
+ 		AND COMMENT_DELETE = 0
+ 		ORDER BY
+ 			COMMENT_REGDATE ASC
+ 	</select>
+ 	
+<!-- 게시글 삭제 조건 검사 : 댓글이 있으면 삭제 불가 -->		
+	<select id="countComment" resultType="int" >
+		SELECT COUNT(*) 
+		FROM TB_COMMENT
+		WHERE parent_num =#{board_num}
+ 		AND comment_delete = 0
+	</select>
+<!-- 댓글 삭제  : 실제로 삭제하진 않고 화면에 안보이기만 삭제하기 위해서  -->	
+	<update id="deleteComment" parameterType="com.example.vo.CommentVO">
+		UPDATE TB_COMMENT 
+		SET comment_delete =1
+		WHERE comment_code = #{comment_code}
+		AND member_password = #{member_password}
+	</update>
+<!-- 댓글 중복 여부 -->    
+	<select id="titleCheck" resultType="int"  parameterType="String" >
+		SELECT COUNT(*)
+		FROM TB_BOARD
+		WHERE
+			TITLE = #{TITLE} 
+			AND BOARD_DELETE != 1
+	</select>
+	
+	<select id ="UpdateCheck" resultType="int" parameterType="com.example.vo.MemberVO">
+		SELECT COUNT(*)
+		FROM TB_BOARD
+		WHERE
+			board_num = #{board_num} 
+		AND member_password = #{member_password}	
+	</select>
+	
+	<select id ="deleteCheck" resultType="int" parameterType="com.example.vo.CommentVO">
+		SELECT COUNT(*)
+		FROM TB_COMMENT 
+		WHERE
+			comment_code = #{comment_code} 
+		AND member_password = #{member_password}	
+	</select>	
+</mapper>
+
