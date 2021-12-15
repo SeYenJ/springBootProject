@@ -5,15 +5,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>게시글 작성</title>
-
-	<link rel="stylesheet" href="/resources/css/bootstrap.css" >
-	<link rel="stylesheet" href="/resources/css/bootstrap-theme.css" >
-	<script type="text/javascript" src="/resources/js/jquery-3.3.1.min.js"></script>
-	<script src="/resources/js/bootstrap.min.js"></script>
-	<script type="text/javascript">
+<link rel="stylesheet" href="/resources/css/bootstrap.css" >
+<link rel="stylesheet" href="/resources/css/bootstrap-theme.css" >
+<script type="text/javascript" src="/resources/js/jquery-3.3.1.min.js"></script>
+<script src="/resources/js/bootstrap.min.js"></script>
+<script type="text/javascript">
 	 var g_count =1;	
 	 function insertCon(){
 			var member_id = $('#member_id').val();
+			var type = $("#type").val();
 			var title = $('#title').val();
 			var content = $('#content').val();
 			var member_password = $('#member_password').val();
@@ -27,22 +27,20 @@
 				  alert("이미지 파일만 저장이 가능합니다.")
 				  return;
 			  }
-			}
+		}
 		//제목 중복 체크
 	 	 var titleck = 0;
 		 if(member_id == ""){
 			 alert("작성자를 입력해 주세요");
-			 return;
+		 }else if(type == ""){
+			 alert("게시글 구분을 선택해주세요.");
 		 }else if(title == ""){
 			 alert("타이틀을 입력해 주세요");
-			 return;5 
 		 }else if(content == ""){
 			 alert("내용을 입력해 주세요");
-			 return;
 		 }else if (isNaN(member_password)==true || 10 < pw){
 			 console.log(isNaN(member_password));
 			 alert("패스워드는 10자리 이하 숫자만 입력해 주세요");
-			 return;
 		 }else if(4 > pw){
 			 alert("패스워드는 4자리 이상 입력해 주세요");
 		 }else{
@@ -99,6 +97,24 @@
 							 <div class="col-xs-10">							 
 							 	${login.member_id}( ${login.member_name} )	
 							 	<input class="form-control" type="hidden" name="member_id" id="member_id" value="${login.member_id}"/>
+							</div>
+						</div>
+					</td>	
+				</tr>
+				<tr> 
+					<td>구분 :
+					<td>
+						<div class="form-group row">
+							 <div class="col-xs-10">							 
+							 	<select class="form-control" name="type" id="type">
+							 	  <option value="">선택</option>
+								  <option value="JAVA">JAVA</option>
+								  <option value="SQL">SQL</option>
+								  <option value="JSP">JSP</option>
+								  <option value="javascript">javascript</option>
+								  <option value="web">web</option>
+								  <option value="기타">기타</option>
+								</select>
 							</div>
 						</div>
 					</td>	

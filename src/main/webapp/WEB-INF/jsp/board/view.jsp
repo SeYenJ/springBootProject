@@ -58,6 +58,16 @@
 		</td>	
 	</tr>
 	<tr>
+		<td>구분 :</td>
+		<td>
+			<div class="form-group row">
+				 <div class="col-xs-10">
+	 				${board.type}
+				</div>
+			</div>
+		</td>	
+	</tr>
+	<tr>
 		<td>제목 :</td>
 		<td>
 			<div class="form-group row">

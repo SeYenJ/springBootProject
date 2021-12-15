@@ -4,13 +4,13 @@
 
   	<!-- 회원가입 완료 -->
 	<insert id="insertMember" parameterType="com.example.vo.MemberVO">
-		INSERT INTO TB_USER (MEMBER_ID,MEMBER_NAME,MEMBER_EMAIL,MEMBER_PASSWORD)
-		VALUES (#{member_id},#{member_name},#{member_email},#{member_password})	
+		INSERT INTO TB_USER (MEMBER_ID,MEMBER_RANK,MEMBER_DPRTM,MEMBER_NAME,MEMBER_EMAIL,MEMBER_PASSWORD)
+		VALUES (#{member_id},#{member_rank},#{member_dprtm},#{member_name},#{member_email},#{member_password})	
 	</insert>
 	
 	<!-- 로그인  -->
 	<select id="login" resultType="com.example.vo.MemberVO" parameterType="com.example.vo.MemberVO">
-		SELECT MEMBER_NAME ,MEMBER_ID
+		SELECT MEMBER_NAME ,MEMBER_ID,MEMBER_RANK ,MEMBER_DPRTM
 		FROM TB_USER
 		WHERE MEMBER_ID =#{member_id} AND MEMBER_PASSWORD = #{member_password}
 	</select>

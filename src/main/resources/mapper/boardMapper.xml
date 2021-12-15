@@ -7,13 +7,13 @@
 
 	<!-- 게시글 작성 -->
 	<insert id="insertContent" parameterType="com.example.vo.MemberVO">
-		INSERT INTO TB_BOARD (MEMBER_ID,TITLE,CONTENT,MEMBER_PASSWORD,UPLOADFILE,BOARD_REGDATE)
-		VALUES (#{member_id},#{title},#{content},#{member_password},#{uploadfile},now())	
+		INSERT INTO TB_BOARD (MEMBER_ID,TYPE,TITLE,CONTENT,MEMBER_PASSWORD,UPLOADFILE,BOARD_REGDATE)
+		VALUES (#{member_id},#{type},#{title},#{content},#{member_password},#{uploadfile},now())	
 	</insert>
 	<!-- 페이징 처리 --> 	
 	<!-- 전체 게시글 리스트	 -->
  	<select id="listCriteria" resultType="com.example.vo.MemberVO"  parameterType="java.lang.Integer" >
-		SELECT BOARD_NUM, MEMBER_ID, TITLE, BOARD_REGDATE, CONTENT , VIEWS, UPLOADFILE ,(SELECT COUNT(*) AS CUT FROM TB_COMMENT WHERE PARENT_NUM = TB_BOARD.BOARD_NUM AND COMMENT_DELETE = 0) 
+		SELECT BOARD_NUM, MEMBER_ID,TYPE, TITLE, BOARD_REGDATE, CONTENT , VIEWS, UPLOADFILE ,(SELECT COUNT(*) AS CUT FROM TB_COMMENT WHERE PARENT_NUM = TB_BOARD.BOARD_NUM AND COMMENT_DELETE = 0) 
 		AS C_NUM FROM TB_BOARD	
 		WHERE BOARD_DELETE = 0
 		<include refid="search"></include>
@@ -32,7 +32,7 @@
  	
 <!-- 검색 게시글 리스트	 -->
  	<select id="selectlist" parameterType="com.example.vo.MemberVO" resultType="com.example.vo.MemberVO">
-		SELECT BOARD_NUM, MEMBER_ID, TITLE, BOARD_REGDATE, CONTENT , VIEWS ,UPLOADFILE, 
+		SELECT BOARD_NUM, MEMBER_ID,TYPE, TITLE, BOARD_REGDATE, CONTENT , VIEWS ,UPLOADFILE, 
 		(SELECT COUNT(*) AS CUT FROM `TB_COMMENT` WHERE PARENT_NUM = TB_BOARD.BOARD_NUM) AS C_NUM 
 		FROM TB_BOARD	
 		WHERE <include refid="search"></include> 
@@ -92,7 +92,7 @@
  	
 <!-- 게시글 보기 -->
  	<select id="selectContent" resultType="com.example.vo.MemberVO">
-		SELECT BOARD_NUM, MEMBER_ID, TITLE, BOARD_REGDATE, CONTENT , VIEWS,UPLOADFILE
+		SELECT BOARD_NUM, MEMBER_ID,TYPE, TITLE, BOARD_REGDATE, CONTENT , VIEWS,UPLOADFILE
 		FROM TB_BOARD	
 		WHERE BOARD_NUM = #{board_num}
 		ORDER BY
@@ -102,6 +102,7 @@
 <!--  글수정 -->	
  	<update id="updateContent" parameterType="com.example.vo.MemberVO">
  		UPDATE TB_BOARD SET
+ 		TYPE = #{type},
  		TITLE = #{title},
  		CONTENT = #{content}
 		WHERE BOARD_NUM = #{board_num}

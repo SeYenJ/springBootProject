@@ -78,6 +78,7 @@
  		//뿌려진 게시글 정보 가져오기
  		<c:forEach items="${memberList}" var="member" >
  		 var json = new Object();	
+ 		  json.type ="${member.type}";
  		  json.title ="${member.title}";
  		  json.member_id ="${member.member_id}";
  		  json.board_regdate ="<fmt:formatDate value="${member.board_regdate}" pattern="yyy-MM-dd "/>";
@@ -91,7 +92,19 @@
  		result = list;
 	 		
  		//제목 순
- 		if(data == "title"){
+ 		if(data == "type"){
+ 			if(titlevalue == 0 ){
+ 	 	 		result.sort(function(a, b) { // 제목 오름차순
+	 			return a.type < b.type ? -1 : a.type > b.type ? 1 : 0; })
+	 			titlevalue = 1;
+ 			}else{
+	 			result.sort(function(a, b) {  // 제목 내림차순
+				return a.title > b.title ? -1 : a.title < b.title ? 1 : 0;})
+				titlevalue = 0;
+ 			}
+ 			
+ 		//제목 순 	
+ 		}else if(data == "title"){
  			if(titlevalue == 0 ){
  	 	 		result.sort(function(a, b) { // 제목 오름차순
 	 			return a.title < b.title ? -1 : a.title > b.title ? 1 : 0; })
@@ -147,6 +160,7 @@
 			var num = i+1;
 			tmpHtml +=" <tr>";
 			tmpHtml +=" <td>"+num+"</td>";
+			tmpHtml +=" <td>"+result[i].type+"</td>";
 			tmpHtml +=" <td><a href='/board/view?board_num="+result[i].board_num+"' style='color:#4C4C4C ; text-decoration:none'>"+result[i].title
 			
 		if(result[i].uploadfile!=""){
@@ -241,7 +255,7 @@
 	   	<div class="row" style=" background-position:left left; background-image:url('/resources/images/list.png');background-repeat: no-repeat ;">	 
 		<!-- 검색 select 박스 추가 -->
 			<div align="center"><img src="/resources/images/title.PNG" width="180px"></div>
-			<div class="col-md-9" align="right">
+			<div class="col-md-8" align="right">
 				<div class="form-inline">
 					<select class="form-control" id ="searchTypeSel">
 						<option value="">검색조건</option>
@@ -261,15 +275,16 @@
 				</div>
 			</div>
 			<!-- 검색 select 박스 끝 -->					
-			<div class="col-md-3" align="right">
+			<div class="col-md-4" align="right">
 				<c:choose>
 				    <c:when test="${sessionScope.login == null}">
 		   				 	<button id="joinUser" class="btn btn-default" onclick="location.href='/user/join'">회원가입</button>
 							<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" >로그인</button>	
 				    </c:when>
 				    <c:otherwise>
-				       '<b>${login.member_id}( ${login.member_name} )</b>' 님이 로그인.
-				       	<button type="button" class="btn btn-info"  id="logout"  onclick="location.href='/user/logout'">로그아웃</button>	
+				       ${login.member_dprtm}  ${login.member_name} ${login.member_rank} <br>
+				       '<b>${login.member_id}</b>'님이 로그인<br>
+				       <button type="button" class="btn btn-info"  id="logout"  onclick="location.href='/user/logout'">로그아웃</button>	
 				    </c:otherwise>
 				</c:choose>			
 				<div class="container">
@@ -327,6 +342,7 @@
 		        <thead>
 		            <tr>
 		                <th>번호</th>
+		                <th><a onclick="sort('type');">구분</a></th>
 		                <th><a onclick="sort('title');">제목</a></th>
 		                <th><a onclick="sort('name');">이름</a></th>
 	   	                <th><a onclick="sort('regdate');">작성일</a></th>
@@ -338,7 +354,8 @@
 			      		<c:when test="${fn:length(memberList) > 0}">
 			           			<c:forEach items="${memberList}" var="member" varStatus="status" >
 					                <tr>
-					                    <td>${status.count}</td> 
+					                    <td>${status.count}</td>
+					                    <td>${member.type}</td> 
 					                    <td><a href="${path}/board/view?board_num=${member.board_num}" style="color:#4C4C4C ; text-decoration:none"> ${member.title}
 					                    <c:set var="uploadfile" value="${member.uploadfile}" /> [${member.c_num}]
 					                     <c:choose>

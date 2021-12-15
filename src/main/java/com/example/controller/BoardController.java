@@ -34,7 +34,6 @@ import com.example.vo.PageMaker;
 public class BoardController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
-	
 	private static final String UPLOAD_PATH = "resources/images";
 
 	@Autowired
@@ -78,12 +77,12 @@ public class BoardController {
 	@ResponseBody
 	public Map<Object, Object> titleCheck(@RequestBody String title) throws Exception{
 	
-	int count = 0;
-    Map<Object, Object> map = new HashMap<Object, Object>();
-	count = service.titleCheck(title);
-	map.put("cnt", count);
-	
-	return map;
+		int count = 0;
+	    Map<Object, Object> map = new HashMap<Object, Object>();
+		count = service.titleCheck(title);
+		map.put("cnt", count);
+		
+		return map;
 	}
 	
 	@RequestMapping(value ="/board/insertContent", method = RequestMethod.POST)
@@ -91,6 +90,7 @@ public class BoardController {
 		MemberVO vo = new MemberVO();
 		
 		vo.setMember_id(request.getParameter("member_id"));
+		vo.setType(request.getParameter("type"));
 		vo.setTitle(request.getParameter("title"));
 		vo.setContent(request.getParameter("content"));
 		vo.setMember_password(request.getParameter("member_password"));
@@ -162,17 +162,16 @@ public class BoardController {
 	@RequestMapping(value= "/board/UpdateCheck")
 	@ResponseBody
 	public Map<Object, Object> UpdateCheck(MemberVO vo) throws Exception{
-	int count = 0;
-	
-    Map<Object, Object> map = new HashMap<Object, Object>();    
-	count = service.UpdateCheck(vo);	
-	if(count >0){
-		service.updateContent(vo);
-	}
-	map.put("cnt", count);
-	
-	return map;
-			
+		int count = 0;
+		
+	    Map<Object, Object> map = new HashMap<Object, Object>();    
+		count = service.UpdateCheck(vo);	
+		if(count >0){
+			service.updateContent(vo);
+		}
+		map.put("cnt", count);
+		
+		return map;
 	}
 
 }
