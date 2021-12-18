@@ -85,7 +85,7 @@
 
 	</script>
 </head>
-<body>
+<body class="bg-gradient-primary">
 <div class="container">
 	<form id="contentForm" name="contentForm" action="/board/insertContent" method="post" enctype="multipart/form-data">
 	    <h3>게시글 작성</h3>	 

@@ -78,7 +78,7 @@
 	} 
 	 </script>
 </head>
-<body>
+<body class="bg-gradient-primary">
 	<div class="container">
 	       <div id="commentList">
 	         	<table class="table table-responsive">

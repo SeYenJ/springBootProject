@@ -249,10 +249,10 @@
 	 	}	 	
 	</script>
 </head>
-<body>
+<body class="bg-gradient-primary">
 	<div class="container" >
     	<br>
-	   	<div class="row" style=" background-position:left left; background-image:url('/resources/images/list.png');background-repeat: no-repeat ;">	 
+	   	<div class="row" style=" background-position:left; background-image:url('/resources/images/list.png');background-repeat: no-repeat ;">
 		<!-- 검색 select 박스 추가 -->
 			<div align="center"><img src="/resources/images/title.PNG" width="180px"></div>
 			<div class="col-md-8" align="right">
