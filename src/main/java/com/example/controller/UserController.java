@@ -3,6 +3,7 @@ package com.example.controller;
 
 import javax.servlet.http.HttpSession;
 
+import com.example.service.Impl.MailServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class UserController {
 
 	@Autowired
 	private memberService service;
+
+	@Autowired
+	private MailServiceImpl mailService;
 	
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	public String join() throws Exception {	
@@ -32,7 +36,10 @@ public class UserController {
 	@RequestMapping(value = "/insertMember", method = RequestMethod.POST)
 	public String insertMember(MemberVO vo) throws Exception {
 		service.insertMember(vo);
-		
+
+		// 회원가입 성공시 가입축하 메일 발송
+		mailService.welcomeMailSend(vo);
+
 		return "redirect:/board";
 	}	
 	
