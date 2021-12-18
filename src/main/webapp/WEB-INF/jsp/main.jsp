@@ -9,10 +9,18 @@
 <head>
 <title>메인 페이지</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link rel="stylesheet" href="/resources/css/bootstrap.css" >
-	<link rel="stylesheet" href="/resources/css/bootstrap-theme.css" >
+
+	<!-- Custom fonts for this template-->
+	<link href="/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link
+			href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+			rel="stylesheet">
+
+	<!-- Custom styles for this template-->
+	<link href="/resources/css/sb-admin-2.min.css" rel="stylesheet">
+
 	<script type="text/javascript" src="/resources/js/jquery-3.3.1.min.js"></script>
-	<script src="/resources/js/bootstrap.min.js"></script>
+	<script src="/resources/js/bootstrap.js"></script>
  	<script type="text/javascript" charset="utf-8">
 	 $(document).ready(function(){
 		 	//기존 쿠기 값 가져오기
@@ -100,47 +108,74 @@
  	
  	</script>	 
 </head>
-<body>
-	<br><br>
-	<div class="container" align="center">	
-		<c:choose>
-		    <c:when test="${sessionScope.member_id == null ||sessionScope.member_id == ''}"><br>
-		 		<div align="center">
-		 			<a href="/"><img src="/resources/images/welcome.png" width="200px"/></a><h1>Login</h1>
-			 		 <form name="loginFrom" method="post" action="/user/loginCheck">
-						<div class="form-group row">
-							 <div class="col-xs-12">
-								<input class="form-control" type="text" name="member_id" id ="member_id" placeholder="아이디를 입력하세요."><p>
+<body  class="bg-gradient-primary">
+
+<div class="container">
+
+	<!-- Outer Row -->
+	<div class="row justify-content-center">
+
+		<div class="col-xl-10 col-lg-12 col-md-9">
+
+			<div class="card o-hidden border-0 shadow-lg my-5">
+				<div class="card-body p-0">
+					<!-- Nested Row within Card Body -->
+					<div class="row">
+						<div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+						<div class="col-lg-6">
+							<div class="p-5">
+							<c:choose>
+								<c:when test="${sessionScope.member_id == null ||sessionScope.member_id == ''}">
+									<div class="text-center">
+										<h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+									</div>
+									<form name="loginFrom" method="post" action="/user/loginCheck">
+										<div class="form-group">
+											<input type="text" name="member_id" id ="member_id" class="form-control form-control-user" aria-describedby="emailHelp"
+												   placeholder="ID">
+										</div>
+										<div class="form-group">
+											<input type="password" class="form-control form-control-user"
+												   name="member_password" id="member_password" placeholder="Password">
+										</div>
+										<div class="form-group">
+											<div class="custom-control custom-checkbox small">
+												<input type="checkbox" class="custom-control-input" id="customCheck">
+												<label class="custom-control-label" for="customCheck" id="rememberId">아이디저장</label>
+											</div>
+										</div>
+										<a class="btn btn-primary btn-user btn-block" id="loginButton" >
+											Login
+										</a>
+										<hr>
+									</form>
+									<div class="text-center">
+										<a class="small" href="/user/userhelp">아이디 찾기</a> |
+										<a class="small" href="/user/join">회원가입</a>
+									</div>
+								</c:when>
+							</c:choose>
 							</div>
 						</div>
-						<div class="form-group row">
-							 <div class="col-xs-12">
-								<input class="form-control" type="password" name="member_password" id="member_password" placeholder="패스워드를 입력하세요.">									
-							</div>
-						</div>
-						<div class="form-group row">
-						<input type="button" id="loginButton" style="WIDTH:95%;HEIGHT:25pt;border:#F2CB61;" value="Login">
-						</div>
-						<div align="center">
-						&nbsp &nbsp 아이디 저장 &nbsp <input type="checkbox" id="rememberId" >
-						</div>
-						<hr>
-						<a href="/user/userhelp">아이디 찾기</a> |	
-						<!-- <a href="">비밀번호 찾기</a> | -->			
-						<a href="/user/join">회원가입</a>		
-					 </form>		
-				</div>			  
-		    </c:when>
-		    <c:otherwise>
-		    		<img src="/resources/images/welcome.png" width="400px"/><p>
-	      			<h3>${sessionScope.member_name}(${sessionScope.member_id}) 님 반갑습니다.</h3><br>
-				<div align="center">
-					<hr><br>
-					<a href="/">메인으로</a> ||	
-					<a href="board/content">게시글 작성</a> 
-				</div>	
-		    </c:otherwise>
-		</c:choose>	
+					</div>
+				</div>
+			</div>
+
+		</div>
+
 	</div>
+
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="/resources/vendor/jquery/jquery.min.js"></script>
+<script src="/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/resources/js/sb-admin-2.min.js"></script>
+
 </body>
 </html>
