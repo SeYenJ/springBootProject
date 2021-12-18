@@ -162,7 +162,7 @@
 				</tr> 
 			</table>													
 		<div class="container" align="right">	
-			<input type="button" class="btn btn-default" id="insertBtn" onclick="location.href='/board'" value="돌아 가기">
+			<input type="button" class="btn btn-default" id="goBackBtn" onclick="location.href='/board'" value="돌아 가기">
 			<input type="button" class="btn btn-info" id="insertBtn" onclick="insertCon()" value="작성 완료">
 		</div>
 	</form>
