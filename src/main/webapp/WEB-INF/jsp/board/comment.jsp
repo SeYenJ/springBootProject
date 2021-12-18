@@ -7,8 +7,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <link rel="stylesheet" href="/resources/css/bootstrap.css" >
-	<link rel="stylesheet" href="/resources/css/bootstrap-theme.css" >
+
+	<!-- Custom fonts for this template-->
+	<link href="/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link
+			href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+			rel="stylesheet">
+
+	<!-- Custom styles for this template-->
+	<link href="/resources/css/sb-admin-2.min.css" rel="stylesheet">
+
 	<script type="text/javascript" src="/resources/js/jquery-3.3.1.min.js"></script>
 	<script src="/resources/js/bootstrap.min.js"></script>
 	 <script type="text/javascript" charset="utf-8">
@@ -125,8 +133,8 @@
 											</tr>											
 										</table>
 								      <div class="modal-footer">
-											<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-											<button type="button" onclick="deleteCom(${commentList.comment_code})" class="btn btn-info">삭제</button>
+											<button type="button" class="btn btn-dark" data-dismiss="modal">취소</button>
+											<button type="button" onclick="deleteCom(${commentList.comment_code})" class="btn btn-danger">삭제</button>
 								      </div>
 								</form>					      	
 						      </div>
@@ -201,7 +209,7 @@
 			                            <br>
 		                            </div>
 		                            <div class="col-xs-2" align="center">
-		                            <button type="button" class="btn btn-success" onclick="insertCom()">댓글 등록</button>	                  
+		                            <button type="button" class="btn btn-primary" onclick="insertCom()">댓글 등록</button>
 		                            </div>
 		                        </td>
 		                    </tr>
