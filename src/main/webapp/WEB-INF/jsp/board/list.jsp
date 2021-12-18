@@ -266,7 +266,7 @@
 	<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
 		<!-- Sidebar - Brand -->
-		<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+		<a class="sidebar-brand d-flex align-items-center justify-content-center" href="/board">
 			<div class="sidebar-brand-icon rotate-n-15">
 				<i class="fas fa-laugh-wink"></i>
 			</div>
@@ -278,7 +278,7 @@
 
 		<!-- Nav Item - Dashboard -->
 		<li class="nav-item">
-			<a class="nav-link" href="index.html">
+			<a class="nav-link" href="/board">
 				<i class="fas fa-fw fa-tachometer-alt"></i>
 				<span>HOME</span></a>
 		</li>
@@ -293,14 +293,14 @@
 
 		<!-- Nav Item - Tables -->
 		<li class="nav-item active">
-			<a class="nav-link" href="tables.html">
+			<a class="nav-link" href="/board">
 				<i class="fas fa-fw fa-table"></i>
 				<span>Board</span></a>
 		</li>
 
 		<!-- Nav Item - Charts -->
 		<li class="nav-item">
-			<a class="nav-link" href="charts.html">
+			<a class="nav-link" href="/chart">
 				<i class="fas fa-fw fa-chart-area"></i>
 				<span>Charts</span></a>
 		</li>
@@ -334,14 +334,25 @@
 
 				<!-- Topbar Navbar -->
 				<ul class="navbar-nav ml-auto">
+
 					<!-- Nav Item - User Information -->
 					<li class="nav-item dropdown no-arrow">
-						<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+						<div class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
 						   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-							<img class="img-profile rounded-circle"
-								 src="/resources/images/undraw_profile.svg">
-						</a>
+							<c:choose>
+								<c:when test="${sessionScope.login == null}">
+									<button id="joinUser" class="btn btn-default" onclick="location.href='/user/join'">회원가입</button>
+									<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" >로그인</button>
+								</c:when>
+								<c:otherwise>
+									${login.member_dprtm}  ${login.member_name} ${login.member_rank}
+									[<b class="mr-2 d-none d-lg-inline text-gray-600 small">${login.member_id}</b>]
+									<img style="margin-left: 10px;" class="img-profile rounded-circle"
+										 src="/resources/images/undraw_profile.svg">
+									<button type="button" class="btn btn-dark btn-sm"  id="logout" style="margin-left: 10px;" onclick="location.href='/user/logout'">로그아웃</button>
+								</c:otherwise>
+							</c:choose>
+						</div>
 					</li>
 
 				</ul>
@@ -352,41 +363,35 @@
 
 	<div class="container" >
     	<br>
-	   	<div class="row" style=" background-position:left; background-image:url('/resources/images/list.png');background-repeat: no-repeat ;">
+	   	<div class="row" style="">
 		<!-- 검색 select 박스 추가 -->
-			<div align="center"><img src="/resources/images/title.PNG" width="180px"></div>
+
 			<div class="col-md-8" align="right">
 				<div class="form-inline">
-					<select class="form-control" id ="searchTypeSel">
+					<select class="form-control navbar-search small" id ="searchTypeSel">
 						<option value="">검색조건</option>
 						<option value="t" <c:if test="${pageMaker.searchType == 't'}">selected='selected'</c:if>>제목</option>
 						<option value="tc"<c:if test="${pageMaker.searchType == 'tc'}">selected='selected'</c:if>>제목+내용</option>
 						<option value="id"<c:if test="${pageMaker.searchType == 'id'}">selected='selected'</c:if>>작성자</option>
 					</select>
-						<input class="form-control" type="text" id="keyword" name="keyword" value="${pageMaker.keyword}" placeholder="검색어를 입력하세요" onkeyup="enterkey();" />							
+					&nbsp
+						<input class="form-control small" type="text" id="keyword" name="keyword" value="${pageMaker.keyword}" placeholder="검색어를 입력하세요" onkeyup="enterkey();" />
 						&nbsp&nbsp
 						<input type="radio" name="radioValue" value="r"<c:if test="${pageMaker.temp == 'r' }">checked='checked'</c:if> checked='checked'/>최신순
 						&nbsp
 						<input type="radio" name="radioValue" value="v"<c:if test="${pageMaker.temp == 'v'}">checked='checked'</c:if>/>조회순			
 						&nbsp
 						<input type="radio" name="radioValue" value="c"<c:if test="${pageMaker.temp == 'c'}">checked='checked'</c:if>/>댓글순 
-						 &nbsp&nbsp
-						<button id="searchBtn" class="btn btn-default" onclick="setSearchSelect();">검색</button>
+						 &nbsp
+					<div class="input-group-append">
+						<button class="btn btn-primary" type="button" id="searchBtn" onclick="setSearchSelect();">
+							<i class="fas fa-search fa-sm"></i>
+						</button>
+					</div>
 				</div>
 			</div>
 			<!-- 검색 select 박스 끝 -->					
 			<div class="col-md-4" align="right">
-				<c:choose>
-				    <c:when test="${sessionScope.login == null}">
-		   				 	<button id="joinUser" class="btn btn-default" onclick="location.href='/user/join'">회원가입</button>
-							<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" >로그인</button>	
-				    </c:when>
-				    <c:otherwise>
-				       ${login.member_dprtm}  ${login.member_name} ${login.member_rank} <br>
-				       '<b>${login.member_id}</b>'님이 로그인<br>
-				       <button type="button" class="btn btn-info"  id="logout"  onclick="location.href='/user/logout'">로그아웃</button>	
-				    </c:otherwise>
-				</c:choose>			
 				<div class="container">
 					<!-- 삭제 모달 팝업 -->
 					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
@@ -483,13 +488,13 @@
 		        </tbody>
 		    </table>	
 	    </div>	
-    	<div align="right">
-	  		<input type="button" class="btn btn-default" id="goBackBtn" onclick="location.href='/board'" value="목록 돌아가기">
-   			<input type="button" class="btn btn-default" id="insertBtn" onclick="location.href='/board/content'" value="게시글 작성" >
+    	<div align="right" style="margin-top: 30px;">
+	  		<input type="button" class="btn btn-dark" id="goBackBtn" onclick="location.href='/board'" value="목록 돌아가기">
+   			<input type="button" class="btn btn-primary" id="insertBtn" onclick="location.href='/board/content'" value="게시글 작성" >
    		</div>	
    		<!-- 페이징 구역 -->
 	    <div align="center">
-		    <ul class="pagination">	
+		    <ul class="pagination" style="text-align: center;">
 		    	<!-- 이전 -->
 	    	  	<c:if test="${pageMarker.prev}">
 			    	<li>
@@ -531,13 +536,7 @@
 	<!-- Custom scripts for all pages-->
 	<script src="/resources/js/sb-admin-2.min.js"></script>
 
-	<!-- Page level plugins -->
-	<script src="/resources/vendor/chart.js/Chart.min.js"></script>
 
-	<!-- Page level custom scripts -->
-	<script src="/resources/js/demo/chart-area-demo.js"></script>
-	<script src="/resources/js/demo/chart-pie-demo.js"></script>
-	<script src="/resources/js/demo/chart-bar-demo.js"></script>
 
 </body>
 </html>
