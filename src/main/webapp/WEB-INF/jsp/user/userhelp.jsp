@@ -9,11 +9,20 @@
 <head>
 <title>아이디 찾기</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link rel="stylesheet" href="/resources/css/bootstrap.css" >
-	<link rel="stylesheet" href="/resources/css/bootstrap-theme.css" >
+
+	<!-- Custom fonts for this template-->
+	<link href="/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link
+			href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+			rel="stylesheet">
+
+	<!-- Custom styles for this template-->
+	<link href="/resources/css/sb-admin-2.min.css" rel="stylesheet">
+
 	<script type="text/javascript" src="/resources/js/jquery-3.3.1.min.js"></script>
 	<script src="/resources/js/bootstrap.min.js"></script>
  	<script type="text/javascript" charset="utf-8">
+
 	 $(document).ready(function(){
 		 
 		 	if ("${check}"== "not"){
@@ -36,20 +45,64 @@
 		 		window.history.back();
 		 	});
 	 });
- 	</script>	 
+ 	</script>
+
+
 </head>
-<body>
-	<div class="container">
-		<h3><img src="/resources/images/find.png" width="30px">아이디 찾기</h3>	
-				<h4>아이디는 가입시 등록한 메일 주소를 입력하여 찾을 수 있습니다. 가입할 때 등록한 메일 주소를 입력하고  "ID찾기" 버튼을 클릭해 주세요.</h4>
-				<form id ="idCheckFrom" action="idCheck" >
-					<input class="form-control" type="text" id="member_name" name="member_name" placeholder="Name" ><br>
-					<input class="form-control" type="text" id="member_email" name="member_email" placeholder="Email Address" ><br>
-					<div align="right">
-						<input type="submit" class="btn btn-default" value="ID 찾기" >
-						<input type="button" class="btn btn-default" id="cancel" value="취소" >
+
+<body class="bg-gradient-primary">
+
+<div class="container">
+
+	<!-- Outer Row -->
+	<div class="row justify-content-center">
+
+		<div class="col-xl-10 col-lg-12 col-md-9">
+
+			<div class="card o-hidden border-0 shadow-lg my-5">
+				<div class="card-body p-0">
+					<!-- Nested Row within Card Body -->
+					<div class="row">
+						<div class="col-lg-6 d-none d-lg-block bg-password-image"></div>
+						<div class="col-lg-6">
+							<div class="p-5">
+								<div class="text-center">
+									<h1 class="h4 text-gray-900 mb-2">Forgot Your ID?</h1>
+									<p class="mb-4">아이디는 가입시 등록한 메일 주소를 입력하여 찾을 수 있습니다. 가입할 때 등록한 메일 주소를 입력하고 "ID찾기" 버튼을 클릭해 주세요.</p>
+								</div>
+								<form id ="idCheckFrom" action="idCheck" >
+									<div class="form-group">
+										<input type="email" class="form-control form-control-user"
+											   id="member_name" name="member_name" placeholder="Name" aria-describedby="emailHelp">
+										<br>
+										<input class="form-control form-control-user" type="text" id="member_email" name="member_email" placeholder="Email Address" >
+									</div>
+
+									<input type="submit" class="btn btn-primary btn-user btn-block" value="ID 찾기" >
+									<input type="button" class="btn btn-primary btn-user btn-block" id="cancel" value="취소" >
+
+								</form>
+							</div>
+						</div>
 					</div>
-				</form>  	
+				</div>
+			</div>
+
+		</div>
+
 	</div>
+
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="/resources/vendor/jquery/jquery.min.js"></script>
+<script src="/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/resources/js/sb-admin-2.min.js"></script>
+
 </body>
 </html>
