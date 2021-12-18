@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mapper.ChartMapper">
+
+    <!-- 카테고리 별 질문 개수 -->
+    <select id="getQuestionDataByCategory" resultType="com.example.vo.ChartVO">
+        SELECT type as label, count(*) as data FROM tb_board
+        GROUP BY type;
+    </select>
+
+    <!-- 카테고리 별 질문 개수 -->
+    <select id="getQuestionDataByRank" resultType="com.example.vo.ChartVO">
+        SELECT member_rank as labels, count(*) as data FROM tb_user u, tb_board b
+        WHERE u.member_id = b.member_id
+        GROUP BY member_rank;
+    </select>
+
+</mapper>
