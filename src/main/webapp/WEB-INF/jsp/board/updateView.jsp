@@ -69,7 +69,7 @@
 	 } 
 	 </script>
 </head>
-<body>
+<body class="bg-gradient-primary">
 <div class="container">
 	<form id="form" action="/board/update" method="post">
 	<c:forEach items="${dto}" var="board" >

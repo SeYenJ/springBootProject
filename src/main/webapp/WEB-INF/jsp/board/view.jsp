@@ -30,7 +30,7 @@
 	
 	</script>
 </head>
-<body>
+<body class="bg-gradient-primary">
 <div class="container">
 	<form id="form" action="/board/delete">
 	<c:forEach items="${dto}" var="board" >
