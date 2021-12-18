@@ -348,8 +348,7 @@
 
 			</nav>
 			<!-- End of Topbar -->
-		</div>
-	</div>
+
 
 	<div class="container" >
     	<br>
@@ -512,6 +511,8 @@
  		</div> 
 	 </div>
 
+	</div>
+	</div>
 	</div>
 	<!-- End of Page Wrapper -->
 
