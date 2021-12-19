@@ -92,7 +92,7 @@ public class BoardController {
 		vo.setMember_id(request.getParameter("member_id"));
 		vo.setType(request.getParameter("type"));
 		vo.setTitle(request.getParameter("title"));
-		vo.setContent(request.getParameter("content"));
+		vo.setContent(request.getParameter("bcontent"));
 		vo.setMember_password(request.getParameter("member_password"));
 		
 		MultipartFile mf = request.getFile("uploadfile"); 
