@@ -72,10 +72,10 @@
 								</div>
 								<form id ="idCheckFrom" action="idCheck" >
 									<div class="form-group">
-										<input type="email" class="form-control form-control-user"
-											   id="member_name" name="member_name" placeholder="Name" aria-describedby="emailHelp">
+										<input type="text" class="form-control form-control-user"
+											   id="member_name" name="member_name" placeholder="Name">
 										<br>
-										<input class="form-control form-control-user" type="text" id="member_email" name="member_email" placeholder="Email Address" >
+										<input class="form-control form-control-user" type="email" id="member_email" name="member_email" placeholder="Email Address" >
 									</div>
 
 									<input type="submit" class="btn btn-primary btn-user btn-block" value="ID 찾기" >
