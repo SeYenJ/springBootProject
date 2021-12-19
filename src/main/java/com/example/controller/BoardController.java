@@ -54,9 +54,6 @@ public class BoardController {
 	    int listCount = service.totalCount(vo);
 		
 		List<MemberVO> memberList = service.listCriteria(vo);
-		for (MemberVO memberVO : memberList) {
-			System.out.println(memberVO.getTitle());
-		}
 	    PageMaker pageMaker = new PageMaker();
 	   	    
 	    pageMaker.setTotalCount(listCount);
