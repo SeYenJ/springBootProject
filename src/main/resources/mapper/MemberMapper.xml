@@ -10,7 +10,7 @@
 	
 	<!-- 로그인  -->
 	<select id="login" resultType="com.example.vo.MemberVO" parameterType="com.example.vo.MemberVO">
-		SELECT MEMBER_NAME ,MEMBER_ID,MEMBER_RANK ,MEMBER_DPRTM -- test
+		SELECT MEMBER_NAME ,MEMBER_ID,MEMBER_RANK ,MEMBER_DPRTM -- test test2
 		FROM TB_USER
 		WHERE MEMBER_ID =#{member_id} AND MEMBER_PASSWORD = #{member_password}
 	</select>
