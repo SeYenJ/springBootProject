@@ -7,7 +7,7 @@
 
     <!-- 카테고리 별 질문 개수 -->
     <select id="getQuestionDataByCategory" resultType="com.example.vo.ChartVO">
-        SELECT type as label, count(*) as data FROM tb_board -- test test2  test3 test4
+        SELECT type as label, count(*) as data FROM tb_board -- test test2  test3 test4 test4
         GROUP BY type;
     </select>
 
